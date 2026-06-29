@@ -1,0 +1,63 @@
+<div class="match-card" [ngClass]="{ 'match-ready': isReady(), 'match-decided': match().winner, 'compact': compact() }">
+  <button
+    class="team-row"
+    [ngClass]="{ 'winner': isWinner(match().team1), 'loser': match().winner && !isWinner(match().team1) }"
+    [disabled]="!isReady()"
+    (click)="onSelectTeam(match().team1)"
+  >
+    @if (match().team1) {
+      <div class="team-badge-wrapper">
+        <img
+          [src]="match().team1!.badgePath"
+          [alt]="match().team1!.name"
+          class="team-badge"
+          loading="lazy"
+        />
+      </div>
+      @if (showTeamPoints(match().team1)) {
+        <span class="team-points" [attr.data-round]="pointsRound()">{{ advancementPoints() }}</span>
+      }
+      <span class="team-name">{{ match().team1!.name }}</span>
+    } @else {
+      <div class="team-badge-wrapper placeholder-badge">
+        <span class="placeholder-icon">?</span>
+      </div>
+      <span class="team-name placeholder-name">TBD</span>
+    }
+    @if (isWinner(match().team1)) {
+      <span class="winner-check">✓</span>
+    }
+  </button>
+
+  <div class="match-divider"></div>
+
+  <button
+    class="team-row"
+    [ngClass]="{ 'winner': isWinner(match().team2), 'loser': match().winner && !isWinner(match().team2) }"
+    [disabled]="!isReady()"
+    (click)="onSelectTeam(match().team2)"
+  >
+    @if (match().team2) {
+      <div class="team-badge-wrapper">
+        <img
+          [src]="match().team2!.badgePath"
+          [alt]="match().team2!.name"
+          class="team-badge"
+          loading="lazy"
+        />
+      </div>
+      @if (showTeamPoints(match().team2)) {
+        <span class="team-points" [attr.data-round]="pointsRound()">{{ advancementPoints() }}</span>
+      }
+      <span class="team-name">{{ match().team2!.name }}</span>
+    } @else {
+      <div class="team-badge-wrapper placeholder-badge">
+        <span class="placeholder-icon">?</span>
+      </div>
+      <span class="team-name placeholder-name">TBD</span>
+    }
+    @if (isWinner(match().team2)) {
+      <span class="winner-check">✓</span>
+    }
+  </button>
+</div>

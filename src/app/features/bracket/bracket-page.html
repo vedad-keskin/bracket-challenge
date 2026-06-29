@@ -1,0 +1,319 @@
+<app-header
+  [isComplete]="bracketService.isComplete()"
+  [isExporting]="isExporting()"
+  (exportBracket)="onExport()"
+  (resetBracket)="onReset()"
+/>
+
+<main class="bracket-main">
+  <div class="export-container" #exportContainer [class.is-exporting]="isExporting()">
+    <div class="export-header">
+      <div class="scoring-wrapper">
+        <app-scoring-legend />
+      </div>
+    </div>
+
+    <div class="bracket-container">
+    <!-- ===================== DESKTOP BRACKET ===================== -->
+    <div class="bracket-desktop">
+      <!-- LEFT HALF -->
+      <div class="bracket-half bracket-left">
+        <!-- R32 Left -->
+        <div class="bracket-round round-r32">
+          <div class="round-header-vertical">
+            <span class="round-label-v">R32</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.leftR32(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+
+        <!-- R16 Left -->
+        <div class="bracket-round round-r16">
+          <div class="round-header-vertical">
+            <span class="round-label-v">R16</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.leftR16(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+
+        <!-- QF Left -->
+        <div class="bracket-round round-qf">
+          <div class="round-header-vertical">
+            <span class="round-label-v">QF</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.leftQF(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+
+        <!-- SF Left -->
+        <div class="bracket-round round-sf">
+          <div class="round-header-vertical">
+            <span class="round-label-v">SF</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.leftSF(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER (Final + 3rd Place) -->
+      <div class="bracket-center">
+        <div class="result-banners">
+          @if (bracketService.champion()) {
+            <div class="champion-banner">
+              <img class="champion-trophy" src="badges/26.png" alt="Trophy" />
+              <div class="champion-info">
+                <span class="champion-label">Your Champion</span>
+                <div class="champion-team">
+                  <img [src]="bracketService.champion()!.badgePath" [alt]="bracketService.champion()!.name" class="champion-badge" />
+                  <span class="champion-name">{{ bracketService.champion()!.name }}</span>
+                  <span class="result-points final-points">6pts</span>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (bracketService.thirdPlaceWinner()) {
+            <div class="third-place-banner">
+              <span class="third-place-medal">3rd</span>
+              <div class="champion-info">
+                <span class="champion-label">Your 3rd Place</span>
+                <div class="champion-team">
+                  <img [src]="bracketService.thirdPlaceWinner()!.badgePath" [alt]="bracketService.thirdPlaceWinner()!.name" class="champion-badge" />
+                  <span class="champion-name">{{ bracketService.thirdPlaceWinner()!.name }}</span>
+                  <span class="result-points third-points">5pts</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="trophy-section">
+          <img class="trophy-icon" src="badges/26.png" alt="FIFA World Cup Trophy" />
+          <span class="trophy-label">FINAL</span>
+        </div>
+        <div class="bracket-round round-final">
+          <div class="round-matches">
+            @for (match of bracketService.final(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+        <div class="third-place-section">
+          <span class="third-place-label">3rd Place</span>
+          <div class="bracket-round round-third">
+            <div class="round-matches">
+              @for (match of bracketService.thirdPlace(); track match.id) {
+                <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT HALF -->
+      <div class="bracket-half bracket-right">
+        <!-- SF Right (closest to center) -->
+        <div class="bracket-round round-sf">
+          <div class="round-header-vertical">
+            <span class="round-label-v">SF</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.rightSF(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+
+        <!-- QF Right -->
+        <div class="bracket-round round-qf">
+          <div class="round-header-vertical">
+            <span class="round-label-v">QF</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.rightQF(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+
+        <!-- R16 Right -->
+        <div class="bracket-round round-r16">
+          <div class="round-header-vertical">
+            <span class="round-label-v">R16</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.rightR16(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+
+        <!-- R32 Right (outermost, far right) -->
+        <div class="bracket-round round-r32">
+          <div class="round-header-vertical">
+            <span class="round-label-v">R32</span>
+          </div>
+          <div class="round-matches">
+            @for (match of bracketService.rightR32(); track match.id) {
+              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== MOBILE BRACKET ===================== -->
+    <div class="bracket-mobile">
+      <!-- R32 -->
+      <section class="mobile-round">
+        <div class="mobile-round-header">
+          <div class="round-indicator r32-color"></div>
+          <h2 class="mobile-round-title">Round of 32</h2>
+          <span class="mobile-round-pts">1pt each</span>
+        </div>
+        <div class="mobile-round-subtitle">Left Bracket</div>
+        <div class="mobile-matches">
+          @for (match of bracketService.leftR32(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+        <div class="mobile-round-subtitle">Right Bracket</div>
+        <div class="mobile-matches">
+          @for (match of bracketService.rightR32(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+      </section>
+
+      <!-- R16 -->
+      <section class="mobile-round">
+        <div class="mobile-round-header">
+          <div class="round-indicator r16-color"></div>
+          <h2 class="mobile-round-title">Round of 16</h2>
+          <span class="mobile-round-pts">2pts each</span>
+        </div>
+        <div class="mobile-round-subtitle">Left Bracket</div>
+        <div class="mobile-matches">
+          @for (match of bracketService.leftR16(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+        <div class="mobile-round-subtitle">Right Bracket</div>
+        <div class="mobile-matches">
+          @for (match of bracketService.rightR16(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+      </section>
+
+      <!-- QF -->
+      <section class="mobile-round">
+        <div class="mobile-round-header">
+          <div class="round-indicator qf-color"></div>
+          <h2 class="mobile-round-title">Quarter-Finals</h2>
+          <span class="mobile-round-pts">3pts each</span>
+        </div>
+        <div class="mobile-round-subtitle">Left Bracket</div>
+        <div class="mobile-matches">
+          @for (match of bracketService.leftQF(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+        <div class="mobile-round-subtitle">Right Bracket</div>
+        <div class="mobile-matches">
+          @for (match of bracketService.rightQF(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+      </section>
+
+      <!-- SF -->
+      <section class="mobile-round">
+        <div class="mobile-round-header">
+          <div class="round-indicator sf-color"></div>
+          <h2 class="mobile-round-title">Semi-Finals</h2>
+          <span class="mobile-round-pts">4pts each</span>
+        </div>
+        <div class="mobile-matches mobile-matches-row">
+          @for (match of bracketService.leftSF(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+          @for (match of bracketService.rightSF(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+      </section>
+
+      <!-- Final -->
+      <div class="result-banners result-banners-mobile">
+        @if (bracketService.champion()) {
+          <div class="champion-banner">
+            <img class="champion-trophy" src="badges/26.png" alt="Trophy" />
+            <div class="champion-info">
+              <span class="champion-label">Your Champion</span>
+              <div class="champion-team">
+                <img [src]="bracketService.champion()!.badgePath" [alt]="bracketService.champion()!.name" class="champion-badge" />
+                <span class="champion-name">{{ bracketService.champion()!.name }}</span>
+                <span class="result-points final-points">6pts</span>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (bracketService.thirdPlaceWinner()) {
+          <div class="third-place-banner">
+            <span class="third-place-medal">3rd</span>
+            <div class="champion-info">
+              <span class="champion-label">Your 3rd Place</span>
+              <div class="champion-team">
+                <img [src]="bracketService.thirdPlaceWinner()!.badgePath" [alt]="bracketService.thirdPlaceWinner()!.name" class="champion-badge" />
+                <span class="champion-name">{{ bracketService.thirdPlaceWinner()!.name }}</span>
+                <span class="result-points third-points">5pts</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <section class="mobile-round mobile-final-section">
+        <div class="mobile-round-header">
+          <div class="round-indicator final-color"></div>
+          <h2 class="mobile-round-title"><img class="mobile-trophy-icon" src="badges/26.png" alt="Trophy" /> Final</h2>
+          <span class="mobile-round-pts">6pts</span>
+        </div>
+        <div class="mobile-matches">
+          @for (match of bracketService.final(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+      </section>
+
+      <!-- 3rd Place -->
+      <section class="mobile-round">
+        <div class="mobile-round-header">
+          <div class="round-indicator third-color"></div>
+          <h2 class="mobile-round-title">🥉 3rd Place</h2>
+          <span class="mobile-round-pts">5pts</span>
+        </div>
+        <div class="mobile-matches">
+          @for (match of bracketService.thirdPlace(); track match.id) {
+            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+  </div>
+</main>
