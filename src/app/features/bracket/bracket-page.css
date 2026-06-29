@@ -61,6 +61,52 @@
   transform: none !important;
 }
 
+/* Force desktop bracket layout during export (even on mobile viewport) */
+.export-container.is-exporting .bracket-desktop {
+  display: flex !important;
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: visible;
+  width: max-content;
+  max-width: none;
+}
+
+.export-container.is-exporting .bracket-mobile,
+.export-container.is-exporting .result-banners-mobile {
+  display: none !important;
+}
+
+.export-container.is-exporting .bracket-center {
+  min-width: 300px;
+  width: 300px;
+  flex-shrink: 0;
+  padding: 0 10px;
+}
+
+.export-container.is-exporting .bracket-center .champion-name {
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.export-container.is-exporting .bracket-left .bracket-round {
+  padding-right: 6px;
+}
+
+.export-container.is-exporting .bracket-left .bracket-round + .bracket-round {
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.export-container.is-exporting .bracket-right .bracket-round {
+  padding-right: 6px;
+}
+
+.export-container.is-exporting .bracket-right .bracket-round + .bracket-round {
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 /* ===== Result banners (champion + 3rd place) ===== */
 .result-banners {
   display: flex;

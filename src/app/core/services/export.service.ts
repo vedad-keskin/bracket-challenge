@@ -14,6 +14,7 @@ type StyleSnapshot = {
   animation: string;
   opacity: string;
   transform: string;
+  display: string;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -26,6 +27,7 @@ export class ExportService {
 
     try {
       const { width, height } = this.getCaptureDimensions(element);
+      const captureWidth = Math.max(width, 1500);
 
       const canvas = await html2canvas(element, {
         backgroundColor: '#0a0e17',
@@ -35,7 +37,7 @@ export class ExportService {
         logging: false,
         width,
         height,
-        windowWidth: width,
+        windowWidth: captureWidth,
         windowHeight: height,
         scrollX: 0,
         scrollY: 0,
@@ -100,6 +102,7 @@ export class ExportService {
         animation: el.style.animation,
         opacity: el.style.opacity,
         transform: el.style.transform,
+        display: el.style.display,
       });
     };
 
@@ -166,21 +169,25 @@ export class ExportService {
     const desktop = element.querySelector<HTMLElement>('.bracket-desktop');
     if (desktop) {
       snapshot(desktop);
+      desktop.style.display = 'flex';
       desktop.style.overflow = 'visible';
       desktop.style.width = 'max-content';
       desktop.style.maxWidth = 'none';
       desktop.style.justifyContent = 'flex-start';
       desktop.style.padding = '0';
+      desktop.style.alignItems = 'stretch';
     }
 
     const mobile = element.querySelector<HTMLElement>('.bracket-mobile');
     if (mobile) {
       snapshot(mobile);
-      mobile.style.overflow = 'visible';
-      mobile.style.width = 'max-content';
-      mobile.style.maxWidth = 'none';
-      mobile.style.padding = '0';
+      mobile.style.display = 'none';
     }
+
+    element.querySelectorAll<HTMLElement>('.result-banners-mobile').forEach((el) => {
+      snapshot(el);
+      el.style.display = 'none';
+    });
 
     window.scrollTo(0, 0);
     element.getBoundingClientRect();
@@ -198,6 +205,7 @@ export class ExportService {
         snap.element.style.animation = snap.animation;
         snap.element.style.opacity = snap.opacity;
         snap.element.style.transform = snap.transform;
+        snap.element.style.display = snap.display;
         if (snap.element === element) {
           snap.element.style.background = '';
         }

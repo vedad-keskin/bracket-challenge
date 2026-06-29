@@ -33,7 +33,7 @@ export class BracketPageComponent {
     this.isExporting.set(true);
     this.cdr.detectChanges();
     await new Promise<void>((resolve) =>
-      requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
     );
     try {
       await this.exportService.exportBracketAsImage(this.exportContainer.nativeElement);

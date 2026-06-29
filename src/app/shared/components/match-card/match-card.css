@@ -232,3 +232,27 @@
     font-size: 13px;
   }
 }
+
+:host-context(.is-exporting) .match-card {
+  width: 180px !important;
+  max-width: none !important;
+}
+
+:host-context(.is-exporting) .team-row {
+  padding: 8px 12px;
+  gap: 8px;
+}
+
+:host-context(.is-exporting) .team-badge-wrapper {
+  width: 32px;
+  height: 32px;
+}
+
+:host-context(.is-exporting) .team-badge {
+  width: 26px;
+  height: 26px;
+}
+
+:host-context(.is-exporting) .team-name {
+  font-size: 12px;
+}
