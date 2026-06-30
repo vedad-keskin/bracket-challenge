@@ -12,12 +12,13 @@ import { ExportService } from '../../core/services/export.service';
 import { BracketExportBridgeService } from '../../core/services/bracket-export-bridge.service';
 import { MatchCardComponent } from '../../shared/components/match-card/match-card';
 import { ScoringLegendComponent } from '../../shared/components/scoring-legend/scoring-legend';
+import { RadialBracketComponent } from '../../shared/components/radial-bracket/radial-bracket';
 import { Team, Match, Round, ROUND_LABELS } from '../../core/models/bracket.model';
 
 @Component({
   selector: 'app-bracket-page',
   standalone: true,
-  imports: [MatchCardComponent, ScoringLegendComponent],
+  imports: [MatchCardComponent, ScoringLegendComponent, RadialBracketComponent],
   templateUrl: './bracket-page.html',
   styleUrl: './bracket-page.css',
 })

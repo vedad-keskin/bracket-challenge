@@ -4,14 +4,14 @@
 }
 
 .bracket-main {
-  padding: 20px;
+  padding: 12px 20px;
   max-width: 1500px;
   margin: 0 auto;
 }
 
 /* ===== Scoring wrapper ===== */
 .scoring-wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -64,11 +64,18 @@
 /* Force desktop bracket layout during export (even on mobile viewport) */
 .export-container.is-exporting .bracket-desktop {
   display: flex !important;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   overflow: visible;
   width: max-content;
   max-width: none;
+}
+
+.export-container.is-exporting .radial-container,
+.export-container.is-exporting .radial-glow,
+.export-container.is-exporting .trophy-glow,
+.export-container.is-exporting .trophy-img {
+  animation: none !important;
 }
 
 .export-container.is-exporting .bracket-mobile,
@@ -76,38 +83,7 @@
   display: none !important;
 }
 
-.export-container.is-exporting .bracket-center {
-  min-width: 300px;
-  width: 300px;
-  flex-shrink: 0;
-  padding: 0 10px;
-}
-
-.export-container.is-exporting .bracket-center .champion-name {
-  white-space: nowrap;
-  overflow: visible;
-  text-overflow: clip;
-}
-
-.export-container.is-exporting .bracket-left .bracket-round {
-  padding-right: 6px;
-}
-
-.export-container.is-exporting .bracket-left .bracket-round + .bracket-round {
-  padding-left: 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.export-container.is-exporting .bracket-right .bracket-round {
-  padding-right: 6px;
-}
-
-.export-container.is-exporting .bracket-right .bracket-round + .bracket-round {
-  padding-left: 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-/* ===== Result banners (champion + 3rd place) ===== */
+/* ===== Result banners (champion + 3rd place) — mobile only ===== */
 .result-banners {
   display: flex;
   flex-direction: column;
@@ -256,7 +232,7 @@
   flex-shrink: 0;
 }
 
-/* ===== DESKTOP BRACKET ===== */
+/* ===== DESKTOP BRACKET (RADIAL) ===== */
 .bracket-desktop {
   display: none;
 }
@@ -265,154 +241,20 @@
 @media (min-width: 1100px) {
   .bracket-desktop {
     display: flex;
-    align-items: stretch;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(20, 24, 36, 0.6) 0%,
+      var(--bg-primary) 70%
+    );
+    border-radius: 16px;
   }
 
   .bracket-mobile {
     display: none !important;
   }
-}
-
-.bracket-half {
-  display: flex;
-  align-items: stretch;
-}
-
-.bracket-round {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.round-header-vertical {
-  display: none;
-}
-
-.round-matches {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  flex: 1;
-  gap: 12px;
-  padding: 4px 0;
-}
-
-/* Connector lines between rounds on desktop */
-@media (min-width: 1100px) {
-  .bracket-left .bracket-round {
-    padding-right: 6px;
-  }
-  .bracket-left .bracket-round + .bracket-round {
-    padding-left: 6px;
-    border-left: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .bracket-right .bracket-round {
-    padding-right: 6px;
-  }
-  .bracket-right .bracket-round + .bracket-round {
-    padding-left: 6px;
-    border-left: 1px solid rgba(255, 255, 255, 0.06);
-  }
-}
-
-/* Center section */
-.bracket-center {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  gap: 12px;
-  padding: 0 12px;
-}
-
-.bracket-center .result-banners {
-  margin-bottom: 4px;
-  width: 100%;
-}
-
-.bracket-center .champion-banner,
-.bracket-center .third-place-banner {
-  padding: 12px 14px;
-}
-
-@media (min-width: 1100px) {
-  .bracket-center {
-    min-width: 300px;
-    width: 300px;
-    flex-shrink: 0;
-    padding: 0 10px;
-  }
-
-  .bracket-center .champion-name {
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
-  }
-}
-
-.trophy-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  align-self: center;
-}
-
-.trophy-icon {
-  width: 100px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 20px rgba(212, 168, 67, 0.4));
-  animation: trophyFloat 3s ease-in-out infinite;
-}
-
-@keyframes trophyFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.trophy-label {
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--gold-primary);
-  font-family: 'Outfit', sans-serif;
-}
-
-.round-final {
-  width: 100%;
-}
-
-.round-final .round-matches {
-  flex: 0;
-}
-
-.third-place-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.third-place-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.round-third {
-  width: 100%;
-}
-
-.round-third .round-matches {
-  flex: 0;
 }
 
 /* ===== MOBILE BRACKET ===== */

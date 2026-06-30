@@ -1,0 +1,344 @@
+:host {
+  display: block;
+}
+
+.radial-container {
+  position: relative;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+/* ===== Background ===== */
+.radial-texture {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(26, 30, 38, 0.4) 0%, rgba(14, 17, 24, 0.95) 70%),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.radial-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(212, 168, 67, 0.18) 0%,
+    rgba(212, 168, 67, 0.06) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.radial-vignette {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 38%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== SVG Connectors ===== */
+.connector-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.connector-line {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 0.7;
+  transition: stroke 0.35s ease, stroke-width 0.35s ease;
+}
+
+.connector-line.winner-path {
+  stroke: #fff;
+  stroke-width: 1.4;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+}
+
+.junction-dot {
+  fill: rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+
+/* ===== Center stack (3rd place + trophy) ===== */
+.center-stack {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.center-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  pointer-events: auto;
+}
+
+.champion-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.champion-winner-flag {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 1px rgba(212, 168, 67, 0.5),
+    0 0 10px rgba(212, 168, 67, 0.35);
+}
+
+.champion-label-inline {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold-primary);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1;
+}
+
+.third-place-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  pointer-events: auto;
+}
+
+.third-winner-flag {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+.third-place-label-inline {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1;
+}
+
+.third-place-mini-match {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.third-mini-node {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.third-mini-node.has-team {
+  background: transparent;
+}
+
+.third-mini-node.clickable {
+  cursor: pointer;
+}
+
+.third-mini-node.clickable:hover .third-mini-flag {
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+.third-mini-node.loser {
+  opacity: 0.3;
+}
+
+.third-mini-node.winner .third-mini-flag {
+  box-shadow: 0 0 0 1px #fff, 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+.third-mini-flag {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.third-mini-divider {
+  width: 8px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.trophy-center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.trophy-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(212, 168, 67, 0.25) 0%,
+    rgba(212, 168, 67, 0.08) 45%,
+    transparent 70%
+  );
+  filter: blur(8px);
+}
+
+.trophy-img {
+  width: 72px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(212, 168, 67, 0.4));
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== Team Nodes ===== */
+.team-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  background: transparent;
+  border: none;
+  transition: opacity 0.25s ease;
+  overflow: visible;
+}
+
+.team-node:not(.has-team) {
+  width: 8px !important;
+  height: 8px !important;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+}
+
+.team-node.clickable {
+  cursor: pointer;
+}
+
+.team-node.clickable:hover .node-flag {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+.team-node.loser {
+  opacity: 0.28;
+}
+
+/* R32: watermark crest behind flag */
+.node-stack.r32-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.node-crest-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  opacity: 0.32;
+  filter: grayscale(35%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.node-flag {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.node-flag.solo-flag {
+  width: 26px;
+  height: 26px;
+}
+
+.r32-node {
+  overflow: visible;
+}
+
+/* ===== Tooltip ===== */
+.radial-tooltip {
+  position: fixed;
+  transform: translate(-50%, -130%);
+  background: rgba(8, 12, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1000;
+}

@@ -2,6 +2,7 @@ export interface Team {
   id: number;
   name: string;
   badgePath: string;
+  flagPath: string;
 }
 
 export enum Round {
@@ -91,72 +92,72 @@ export const TEAMS: Team[] = [
   // ============================================================
 
   // Match 0: Denmark vs Switzerland
-  { id: 0, name: 'Germany', badgePath: 'badges/8.png' },
-  { id: 1, name: 'Paraguay', badgePath: 'badges/33.png' },
+  { id: 0, name: 'Germany', badgePath: 'badges/8.png', flagPath: 'flags/0.png' },
+  { id: 1, name: 'Paraguay', badgePath: 'badges/33.png', flagPath: 'flags/1.png' },
 
   // Match 1: France vs Sweden
-  { id: 2, name: 'France', badgePath: 'badges/16.png' },
-  { id: 3, name: 'Sweden', badgePath: 'badges/38.png' },
+  { id: 2, name: 'France', badgePath: 'badges/16.png', flagPath: 'flags/2.png' },
+  { id: 3, name: 'Sweden', badgePath: 'badges/38.png', flagPath: 'flags/3.png' },
 
   // Match 2: South Africa vs Canada
-  { id: 4, name: 'South Africa', badgePath: 'badges/27.png' },
-  { id: 5, name: 'Canada', badgePath: 'badges/30.png' },
+  { id: 4, name: 'South Africa', badgePath: 'badges/27.png', flagPath: 'flags/4.png' },
+  { id: 5, name: 'Canada', badgePath: 'badges/30.png', flagPath: 'flags/5.png' },
 
   // Match 3: Netherlands vs Morocco
-  { id: 6, name: 'Netherlands', badgePath: 'badges/9.png' },
-  { id: 7, name: 'Morocco', badgePath: 'badges/4.png' },
+  { id: 6, name: 'Netherlands', badgePath: 'badges/9.png', flagPath: 'flags/6.png' },
+  { id: 7, name: 'Morocco', badgePath: 'badges/4.png', flagPath: 'flags/7.png' },
 
   // Match 4: Portugal vs Croatia
-  { id: 8, name: 'Portugal', badgePath: 'badges/21.png' },
-  { id: 9, name: 'Croatia', badgePath: 'badges/23.png' },
+  { id: 8, name: 'Portugal', badgePath: 'badges/21.png', flagPath: 'flags/8.png' },
+  { id: 9, name: 'Croatia', badgePath: 'badges/23.png', flagPath: 'flags/9.png' },
 
   // Match 5: Spain vs Austria
-  { id: 10, name: 'Spain', badgePath: 'badges/14.png' },
-  { id: 11, name: 'Austria', badgePath: 'badges/20.png' },
+  { id: 10, name: 'Spain', badgePath: 'badges/14.png', flagPath: 'flags/10.png' },
+  { id: 11, name: 'Austria', badgePath: 'badges/20.png', flagPath: 'flags/11.png' },
 
   // Match 6: USA vs Bosnia
-  { id: 12, name: 'USA', badgePath: 'badges/6.png' },
-  { id: 13, name: 'Bosnia', badgePath: 'badges/25.png' },
+  { id: 12, name: 'USA', badgePath: 'badges/6.png', flagPath: 'flags/12.png' },
+  { id: 13, name: 'Bosnia', badgePath: 'badges/25.png', flagPath: 'flags/13.png' },
 
   // Match 7: Senegal vs Ecuador
-  { id: 14, name: 'Belgium', badgePath: 'badges/12.png' },
-  { id: 15, name: 'Senegal', badgePath: 'badges/13.png' },
+  { id: 14, name: 'Belgium', badgePath: 'badges/12.png', flagPath: 'flags/14.png' },
+  { id: 15, name: 'Senegal', badgePath: 'badges/13.png', flagPath: 'flags/15.png' },
 
   // ============================================================
   // RIGHT BRACKET (indices 16–31)
   // ============================================================
 
   // Match 0: Brazil vs Japan
-  { id: 16, name: 'Brazil', badgePath: 'badges/3.png' },
-  { id: 17, name: 'Japan', badgePath: 'badges/10.png' },
+  { id: 16, name: 'Brazil', badgePath: 'badges/3.png', flagPath: 'flags/16.png' },
+  { id: 17, name: 'Japan', badgePath: 'badges/10.png', flagPath: 'flags/17.png' },
 
   // Match 1: Nigeria vs Norway
-  { id: 18, name: 'Cote d\'Ivoire', badgePath: 'badges/36.png' },
-  { id: 19, name: 'Norway', badgePath: 'badges/17.png' },
+  { id: 18, name: 'Cote d\'Ivoire', badgePath: 'badges/36.png', flagPath: 'flags/18.png' },
+  { id: 19, name: 'Norway', badgePath: 'badges/17.png', flagPath: 'flags/19.png' },
 
   // Match 2: Mexico vs Peru
-  { id: 20, name: 'Mexico', badgePath: 'badges/1.png' },
-  { id: 21, name: 'Ecuador', badgePath: 'badges/37.png' },
+  { id: 20, name: 'Mexico', badgePath: 'badges/1.png', flagPath: 'flags/20.png' },
+  { id: 21, name: 'Ecuador', badgePath: 'badges/37.png', flagPath: 'flags/21.png' },
 
   // Match 3: England vs DR Congo
-  { id: 22, name: 'England', badgePath: 'badges/24.png' },
-  { id: 23, name: 'DR Congo', badgePath: 'badges/46.png' },
+  { id: 22, name: 'England', badgePath: 'badges/24.png', flagPath: 'flags/22.png' },
+  { id: 23, name: 'DR Congo', badgePath: 'badges/46.png', flagPath: 'flags/23.png' },
 
   // Match 4: Argentina vs Australia
-  { id: 24, name: 'Argentina', badgePath: 'badges/18.png' },
-  { id: 25, name: 'Cape Verde', badgePath: 'badges/42.png' },
+  { id: 24, name: 'Argentina', badgePath: 'badges/18.png', flagPath: 'flags/24.png' },
+  { id: 25, name: 'Cape Verde', badgePath: 'badges/42.png', flagPath: 'flags/25.png' },
 
   // Match 5: South Korea vs Egypt
-  { id: 26, name: 'Australia', badgePath: 'badges/7.png' },
-  { id: 27, name: 'Egypt', badgePath: 'badges/39.png' },
+  { id: 26, name: 'Australia', badgePath: 'badges/7.png', flagPath: 'flags/26.png' },
+  { id: 27, name: 'Egypt', badgePath: 'badges/39.png', flagPath: 'flags/27.png' },
 
   // Match 6: Algeria vs Tunisia
-  { id: 28, name: 'Switzerland', badgePath: 'badges/2.png' },
-  { id: 29, name: 'Algeria', badgePath: 'badges/19.png' },
+  { id: 28, name: 'Switzerland', badgePath: 'badges/2.png', flagPath: 'flags/28.png' },
+  { id: 29, name: 'Algeria', badgePath: 'badges/19.png', flagPath: 'flags/29.png' },
 
   // Match 7: Colombia vs Cameroon
-  { id: 30, name: 'Colombia', badgePath: 'badges/48.png' },
-  { id: 31, name: 'Ghana', badgePath: 'badges/49.png' },
+  { id: 30, name: 'Colombia', badgePath: 'badges/48.png', flagPath: 'flags/30.png' },
+  { id: 31, name: 'Ghana', badgePath: 'badges/49.png', flagPath: 'flags/31.png' },
 ];
 
 /** Helper to get a copy of TEAMS (used by BracketService) */

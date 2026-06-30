@@ -1,0 +1,135 @@
+<div class="radial-container" [style.width.px]="SIZE" [style.height.px]="SIZE">
+
+  <div class="radial-texture"></div>
+  <div class="radial-glow"></div>
+  <div class="radial-vignette"></div>
+
+  <svg class="connector-svg" [attr.viewBox]="'0 0 ' + SIZE + ' ' + SIZE" [attr.width]="SIZE" [attr.height]="SIZE">
+    @for (p of allConnectors(); track p.d) {
+      <path [attr.d]="p.d" class="connector-line" [class.winner-path]="p.winnerPath" fill="none" />
+    }
+    @for (j of allJunctions(); track j.x + '-' + j.y) {
+      <circle [attr.cx]="j.x" [attr.cy]="j.y" r="2.5" class="junction-dot" />
+    }
+  </svg>
+
+  <div class="center-stack" [style.left.px]="CENTER" [style.top.px]="CENTER">
+    <div class="center-results">
+      @if (champion(); as champ) {
+        <div class="champion-center">
+          <img
+            class="champion-winner-flag"
+            [src]="champ.flagPath"
+            [alt]="champ.name"
+            [title]="champ.name"
+            loading="lazy"
+          />
+          <span class="champion-label-inline">1st</span>
+        </div>
+      }
+      <div class="third-place-center">
+      @if (thirdPlaceWinner(); as winner) {
+        <img
+          class="third-winner-flag"
+          [src]="winner.flagPath"
+          [alt]="winner.name"
+          [title]="winner.name"
+          loading="lazy"
+        />
+      }
+      <span class="third-place-label-inline">3rd</span>
+      @if (thirdPlaceMatch(); as m) {
+        <div class="third-place-mini-match">
+          <button
+            type="button"
+            class="third-mini-node"
+            [class.has-team]="m.team1 !== null"
+            [class.winner]="isThirdPlaceWinner(m.team1)"
+            [class.loser]="isThirdPlaceLoser(m.team1)"
+            [class.clickable]="isThirdPlaceClickable(m.team1)"
+            [disabled]="!isThirdPlaceClickable(m.team1)"
+            (click)="onThirdPlaceClick(m.team1)"
+            (mouseenter)="m.team1 && onTeamHover(m.team1, $event)"
+            (mouseleave)="onNodeLeave()"
+          >
+            @if (m.team1) {
+              <img [src]="m.team1.flagPath" [alt]="m.team1.name" class="third-mini-flag" loading="lazy" />
+            }
+          </button>
+          <span class="third-mini-divider"></span>
+          <button
+            type="button"
+            class="third-mini-node"
+            [class.has-team]="m.team2 !== null"
+            [class.winner]="isThirdPlaceWinner(m.team2)"
+            [class.loser]="isThirdPlaceLoser(m.team2)"
+            [class.clickable]="isThirdPlaceClickable(m.team2)"
+            [disabled]="!isThirdPlaceClickable(m.team2)"
+            (click)="onThirdPlaceClick(m.team2)"
+            (mouseenter)="m.team2 && onTeamHover(m.team2, $event)"
+            (mouseleave)="onNodeLeave()"
+          >
+            @if (m.team2) {
+              <img [src]="m.team2.flagPath" [alt]="m.team2.name" class="third-mini-flag" loading="lazy" />
+            }
+          </button>
+        </div>
+      }
+      </div>
+    </div>
+
+    <div class="trophy-center">
+      <div class="trophy-glow"></div>
+      <img class="trophy-img" src="badges/26.png" alt="FIFA World Cup Trophy" />
+    </div>
+  </div>
+
+  @for (node of allNodes(); track trackNode($index, node)) {
+    <div
+      class="team-node"
+      [class.has-team]="node.team !== null"
+      [class.r32-node]="node.round === Round.R32"
+      [class.winner]="node.isWinner"
+      [class.loser]="node.isLoser"
+      [class.clickable]="isClickable(node)"
+      [class.locked]="bracketService.isLocked(node.match.id)"
+      [style.left.px]="node.x"
+      [style.top.px]="node.y"
+      [style.width.px]="getNodeSize(node.round)"
+      [style.height.px]="getNodeSize(node.round)"
+      (click)="onNodeClick(node)"
+      (mouseenter)="onNodeHover(node, $event)"
+      (mouseleave)="onNodeLeave()"
+    >
+      @if (node.team) {
+        @if (showCrest(node.round)) {
+          <div class="node-stack r32-stack">
+            <img
+              [src]="node.team.badgePath"
+              [alt]="node.team.name"
+              class="node-crest-bg"
+              [style.transform]="getCrestTransform(node)"
+              loading="lazy"
+            />
+            <img
+              [src]="node.team.flagPath"
+              [alt]="node.team.name"
+              class="node-flag"
+              loading="lazy"
+            />
+          </div>
+        } @else {
+          <img [src]="node.team.flagPath" [alt]="node.team.name" class="node-flag solo-flag" loading="lazy" />
+        }
+      }
+    </div>
+  }
+</div>
+
+@if (hoveredNode(); as node) {
+  @if (node.team) {
+    <div class="radial-tooltip" [style.left.px]="tooltipX()" [style.top.px]="tooltipY()">
+      {{ node.team.name }}
+    </div>
+  }
+}

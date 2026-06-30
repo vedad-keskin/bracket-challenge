@@ -164,7 +164,7 @@ export class ExportService {
     const thirdPlaceBanners = element.querySelectorAll<HTMLElement>('.third-place-banner');
     thirdPlaceBanners.forEach((banner) => freezeForCapture(banner));
 
-    element.querySelectorAll<HTMLElement>('.champion-trophy, .trophy-icon').forEach(freezeForCapture);
+    element.querySelectorAll<HTMLElement>('.champion-trophy, .trophy-icon, .trophy-img, .radial-glow, .trophy-glow').forEach(freezeForCapture);
 
     const desktop = element.querySelector<HTMLElement>('.bracket-desktop');
     if (desktop) {
@@ -173,9 +173,15 @@ export class ExportService {
       desktop.style.overflow = 'visible';
       desktop.style.width = 'max-content';
       desktop.style.maxWidth = 'none';
-      desktop.style.justifyContent = 'flex-start';
+      desktop.style.justifyContent = 'center';
       desktop.style.padding = '0';
-      desktop.style.alignItems = 'stretch';
+      desktop.style.alignItems = 'center';
+    }
+
+    const radial = element.querySelector<HTMLElement>('.radial-container');
+    if (radial) {
+      snapshot(radial);
+      radial.style.overflow = 'visible';
     }
 
     const mobile = element.querySelector<HTMLElement>('.bracket-mobile');
