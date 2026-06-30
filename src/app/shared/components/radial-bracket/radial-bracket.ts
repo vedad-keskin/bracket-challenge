@@ -41,6 +41,30 @@ interface XY {
   y: number;
 }
 
+/** Clockwise ring order: R0–R7 down the right arc, L7–L0 up the left arc (L0 west of top, R0 east). */
+const R32_RING_ORDER: ReadonlyArray<{ side: 'left' | 'right'; matchIdx: number }> = [
+  { side: 'right', matchIdx: 0 },
+  { side: 'right', matchIdx: 1 },
+  { side: 'right', matchIdx: 2 },
+  { side: 'right', matchIdx: 3 },
+  { side: 'right', matchIdx: 4 },
+  { side: 'right', matchIdx: 5 },
+  { side: 'right', matchIdx: 6 },
+  { side: 'right', matchIdx: 7 },
+  { side: 'left', matchIdx: 7 },
+  { side: 'left', matchIdx: 6 },
+  { side: 'left', matchIdx: 5 },
+  { side: 'left', matchIdx: 4 },
+  { side: 'left', matchIdx: 3 },
+  { side: 'left', matchIdx: 2 },
+  { side: 'left', matchIdx: 1 },
+  { side: 'left', matchIdx: 0 },
+];
+
+const R32_PAIR_COUNT = 16;
+const R32_PAIR_STEP = 360 / R32_PAIR_COUNT;
+const R32_INTRA_PAIR_OFFSET = 5.5;
+
 @Component({
   selector: 'app-radial-bracket',
   standalone: true,
@@ -145,18 +169,27 @@ export class RadialBracketComponent {
   private buildR32Nodes(left: Match[], right: Match[]): RadialNode[] {
     const nodes: RadialNode[] = [];
     const radius = this.R[Round.R32] * this.CENTER;
-    const rightAngles = this.spreadAngles(right.length * 2, 0, 180);
-    const leftAngles = this.spreadAngles(left.length * 2, 180, 360);
+    const angleMap = this.buildR32AngleMap();
 
     right.forEach((m, i) => {
-      nodes.push(this.mk(m, 0, m.team1, rightAngles[i * 2], radius, Round.R32, 'right', i));
-      nodes.push(this.mk(m, 1, m.team2, rightAngles[i * 2 + 1], radius, Round.R32, 'right', i));
+      nodes.push(this.mk(m, 0, m.team1, angleMap.get(`right-${i}-0`)!, radius, Round.R32, 'right', i));
+      nodes.push(this.mk(m, 1, m.team2, angleMap.get(`right-${i}-1`)!, radius, Round.R32, 'right', i));
     });
     left.forEach((m, i) => {
-      nodes.push(this.mk(m, 0, m.team1, leftAngles[i * 2], radius, Round.R32, 'left', i));
-      nodes.push(this.mk(m, 1, m.team2, leftAngles[i * 2 + 1], radius, Round.R32, 'left', i));
+      nodes.push(this.mk(m, 0, m.team1, angleMap.get(`left-${i}-0`)!, radius, Round.R32, 'left', i));
+      nodes.push(this.mk(m, 1, m.team2, angleMap.get(`left-${i}-1`)!, radius, Round.R32, 'left', i));
     });
     return nodes;
+  }
+
+  private buildR32AngleMap(): Map<string, number> {
+    const map = new Map<string, number>();
+    R32_RING_ORDER.forEach(({ side, matchIdx }, pairIndex) => {
+      const center = pairIndex * R32_PAIR_STEP + R32_PAIR_STEP / 2;
+      map.set(`${side}-${matchIdx}-0`, center - R32_INTRA_PAIR_OFFSET);
+      map.set(`${side}-${matchIdx}-1`, center + R32_INTRA_PAIR_OFFSET);
+    });
+    return map;
   }
 
   private buildDerivedNodes(
@@ -289,13 +322,6 @@ export class RadialBracketComponent {
 
   private midAngle(a: number, b: number): number {
     return (a + b) / 2;
-  }
-
-  private spreadAngles(count: number, from: number, to: number): number[] {
-    if (count <= 0) return [];
-    if (count === 1) return [(from + to) / 2];
-    const step = (to - from) / (count - 1);
-    return Array.from({ length: count }, (_, i) => from + step * i);
   }
 
   private angleToXY(deg: number, radius: number): XY {
