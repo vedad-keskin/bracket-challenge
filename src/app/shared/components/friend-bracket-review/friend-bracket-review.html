@@ -1,0 +1,134 @@
+<div class="review-bracket">
+  <div class="review-legend">
+    <span class="legend-pill legend-correct">✓ Correct</span>
+    <span class="legend-pill legend-wrong">✗ Wrong</span>
+    <span class="legend-pill legend-pending">— Pending</span>
+  </div>
+
+  <div class="review-bracket-scroll">
+    <div class="review-bracket-grid">
+      <div class="bracket-half bracket-left">
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().leftR32; track match.id) {
+              <app-match-card
+                [match]="match"
+                [badgeOnly]="true"
+                [showNames]="true"
+                [readonly]="true"
+                [reviewStatus]="verdict(match)"
+              />
+            }
+          </div>
+        </div>
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().leftR16; track match.id) {
+              <app-match-card [match]="match" [badgeOnly]="true" [readonly]="true" [reviewStatus]="verdict(match)" />
+            }
+          </div>
+        </div>
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().leftQF; track match.id) {
+              <app-match-card [match]="match" [badgeOnly]="true" [readonly]="true" [reviewStatus]="verdict(match)" />
+            }
+          </div>
+        </div>
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().leftSF; track match.id) {
+              <app-match-card [match]="match" [badgeOnly]="true" [readonly]="true" [reviewStatus]="verdict(match)" />
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="bracket-center">
+        @if (review().champion && review().final[0]) {
+          <app-match-card
+            [match]="review().final[0]"
+            [resultTeam]="review().champion"
+            resultLabel="Champion"
+            resultLabelTone="gold"
+            [badgeOnly]="true"
+            [readonly]="true"
+            [reviewStatus]="championVerdict()"
+          />
+        }
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().final; track match.id) {
+              <app-match-card
+                [match]="match"
+                [badgeOnly]="true"
+                [readonly]="true"
+                [reviewStatus]="verdict(match)"
+              />
+            }
+          </div>
+        </div>
+        @if (review().thirdPlaceWinner && review().thirdPlace[0]) {
+          <app-match-card
+            [match]="review().thirdPlace[0]"
+            [resultTeam]="review().thirdPlaceWinner"
+            resultLabel="3rd Place"
+            resultLabelTone="bronze"
+            [badgeOnly]="true"
+            [readonly]="true"
+            [reviewStatus]="thirdPlaceVerdict()"
+          />
+        }
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().thirdPlace; track match.id) {
+              <app-match-card
+                [match]="match"
+                [badgeOnly]="true"
+                [readonly]="true"
+                [reviewStatus]="verdict(match)"
+              />
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="bracket-half bracket-right">
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().rightSF; track match.id) {
+              <app-match-card [match]="match" [badgeOnly]="true" [readonly]="true" [reviewStatus]="verdict(match)" />
+            }
+          </div>
+        </div>
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().rightQF; track match.id) {
+              <app-match-card [match]="match" [badgeOnly]="true" [readonly]="true" [reviewStatus]="verdict(match)" />
+            }
+          </div>
+        </div>
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().rightR16; track match.id) {
+              <app-match-card [match]="match" [badgeOnly]="true" [readonly]="true" [reviewStatus]="verdict(match)" />
+            }
+          </div>
+        </div>
+        <div class="bracket-round">
+          <div class="round-matches">
+            @for (match of review().rightR32; track match.id) {
+              <app-match-card
+                [match]="match"
+                [badgeOnly]="true"
+                [showNames]="true"
+                [readonly]="true"
+                [reviewStatus]="verdict(match)"
+              />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<main class="leaderboard-page">
+  <header class="page-header">
+    <h1>Ranking</h1>
+    <p class="page-subtitle">Points update automatically when you deploy new official results in code.</p>
+  </header>
+
+  <section class="ranking-section">
+    <table class="ranking-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Friend</th>
+          <th>Points</th>
+          <th>Correct</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rankings(); track row.name; let i = $index) {
+          <tr
+            [class.leader]="i === 0"
+            [class.selected]="selectedBreakdown()?.name === row.name"
+            (click)="selectFriend(row)"
+          >
+            <td>{{ i + 1 }}</td>
+            <td class="friend-name">{{ row.name }}</td>
+            <td class="points">{{ row.points }}</td>
+            <td>{{ row.correctCount }}/{{ row.totalDecided }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  @if (selectedBreakdown(); as friend) {
+    <section class="inspector-section">
+      <div class="inspector-header">
+        <h2>{{ friend.name }}'s picks</h2>
+        <span class="inspector-score">{{ friend.points }} pts</span>
+      </div>
+
+      <div class="inspector-controls">
+        <div class="friend-tabs">
+          @for (row of rankings(); track row.name) {
+            <button
+              class="friend-tab"
+              [class.active]="friend.name === row.name"
+              (click)="selectFriend(row)"
+            >
+              {{ row.name }}
+            </button>
+          }
+        </div>
+
+        <div class="view-toggle">
+          <button
+            class="view-tab"
+            [class.active]="inspectorView() === 'list'"
+            (click)="setInspectorView('list')"
+          >
+            List
+          </button>
+          <button
+            class="view-tab"
+            [class.active]="inspectorView() === 'bracket'"
+            (click)="setInspectorView('bracket')"
+          >
+            Bracket
+          </button>
+        </div>
+      </div>
+
+      @if (inspectorView() === 'list') {
+        <div class="breakdown-table-wrap">
+          <table class="breakdown-table">
+            <thead>
+              <tr>
+                <th>Match</th>
+                <th>Friend picked</th>
+                <th>Official result</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of friend.breakdown; track row.matchId) {
+                @if (row.team1Name || row.team2Name || row.isLocked) {
+                  <tr [class]="rowClass(row)">
+                    <td>
+                      <span class="round-tag">{{ row.round }}</span>
+                      {{ matchLabel(row) }}
+                    </td>
+                    <td>{{ row.friendPickName ?? '—' }}</td>
+                    <td>{{ row.officialWinnerName ?? 'Pending' }}</td>
+                    <td>{{ row.isLocked ? row.pointsEarned : '—' }}</td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else if (selectedReview(); as review) {
+        <app-friend-bracket-review [review]="review" />
+      }
+    </section>
+  }
+</main>

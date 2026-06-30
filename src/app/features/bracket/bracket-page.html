@@ -1,12 +1,5 @@
-<app-header
-  [isComplete]="bracketService.isComplete()"
-  [isExporting]="isExporting()"
-  (exportBracket)="onExport()"
-  (resetBracket)="onReset()"
-/>
-
 <main class="bracket-main">
-  <div class="export-container" #exportContainer [class.is-exporting]="isExporting()">
+  <div class="export-container" #exportContainer [class.is-exporting]="bridge.isExporting()">
     <div class="export-header">
       <div class="scoring-wrapper">
         <app-scoring-legend />
@@ -25,7 +18,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.leftR32(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -37,7 +30,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.leftR16(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -49,7 +42,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.leftQF(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -61,7 +54,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.leftSF(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -106,7 +99,7 @@
         <div class="bracket-round round-final">
           <div class="round-matches">
             @for (match of bracketService.final(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -115,7 +108,7 @@
           <div class="bracket-round round-third">
             <div class="round-matches">
               @for (match of bracketService.thirdPlace(); track match.id) {
-                <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+                <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
               }
             </div>
           </div>
@@ -131,7 +124,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.rightSF(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -143,7 +136,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.rightQF(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -155,7 +148,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.rightR16(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -167,7 +160,7 @@
           </div>
           <div class="round-matches">
             @for (match of bracketService.rightR32(); track match.id) {
-              <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+              <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
             }
           </div>
         </div>
@@ -186,13 +179,13 @@
         <div class="mobile-round-subtitle">Left Bracket</div>
         <div class="mobile-matches">
           @for (match of bracketService.leftR32(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
         <div class="mobile-round-subtitle">Right Bracket</div>
         <div class="mobile-matches">
           @for (match of bracketService.rightR32(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
       </section>
@@ -207,13 +200,13 @@
         <div class="mobile-round-subtitle">Left Bracket</div>
         <div class="mobile-matches">
           @for (match of bracketService.leftR16(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
         <div class="mobile-round-subtitle">Right Bracket</div>
         <div class="mobile-matches">
           @for (match of bracketService.rightR16(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
       </section>
@@ -228,13 +221,13 @@
         <div class="mobile-round-subtitle">Left Bracket</div>
         <div class="mobile-matches">
           @for (match of bracketService.leftQF(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
         <div class="mobile-round-subtitle">Right Bracket</div>
         <div class="mobile-matches">
           @for (match of bracketService.rightQF(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
       </section>
@@ -248,10 +241,10 @@
         </div>
         <div class="mobile-matches mobile-matches-row">
           @for (match of bracketService.leftSF(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
           @for (match of bracketService.rightSF(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
       </section>
@@ -295,7 +288,7 @@
         </div>
         <div class="mobile-matches">
           @for (match of bracketService.final(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
       </section>
@@ -309,7 +302,7 @@
         </div>
         <div class="mobile-matches">
           @for (match of bracketService.thirdPlace(); track match.id) {
-            <app-match-card [match]="match" (winnerSelected)="onWinnerSelected($event)" />
+            <app-match-card [match]="match" [locked]="bracketService.isLocked(match.id)" (winnerSelected)="onWinnerSelected($event)" />
           }
         </div>
       </section>

@@ -3,6 +3,7 @@
 }
 
 .match-card {
+  position: relative;
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
@@ -20,6 +21,184 @@
 .match-card.match-decided {
   border-color: var(--gold-primary);
   box-shadow: 0 0 20px rgba(212, 168, 67, 0.12);
+}
+
+.match-card.match-readonly .team-row {
+  cursor: default;
+}
+
+.match-card.match-readonly .team-row:not(.winner):not(.loser):hover {
+  background: transparent;
+}
+
+.match-lock {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 10px;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.review-flag {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  z-index: 2;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.review-flag-correct {
+  background: #22c55e;
+  border: 2px solid #4ade80;
+}
+
+.review-flag-wrong {
+  background: #ef4444;
+  border: 2px solid #f87171;
+}
+
+.match-card.review-correct {
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.match-card.review-wrong {
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.match-card.review-correct::before,
+.match-card.review-wrong::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  z-index: 1;
+}
+
+.match-card.review-correct::before {
+  background: #22c55e;
+}
+
+.match-card.review-wrong::before {
+  background: #ef4444;
+}
+
+.match-card.review-correct.match-decided {
+  border-color: #22c55e;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
+}
+
+.match-card.review-wrong.match-decided {
+  border-color: #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+}
+
+.match-card.badge-only {
+  width: 52px;
+  border-radius: 8px;
+}
+
+.match-card.badge-only .team-row {
+  justify-content: center;
+  padding: 4px;
+  gap: 0;
+}
+
+.match-card.badge-only .team-badge-wrapper {
+  width: 24px;
+  height: 24px;
+}
+
+.match-card.badge-only .team-badge {
+  width: 20px;
+  height: 20px;
+}
+
+.match-card.badge-only .match-divider {
+  margin: 0 4px;
+}
+
+.match-card.badge-only .team-row.winner {
+  background: rgba(212, 168, 67, 0.2);
+}
+
+.match-card.badge-only .team-row.loser {
+  opacity: 0.35;
+}
+
+.match-card.badge-only.review-correct .team-row.winner {
+  background: rgba(34, 197, 94, 0.25);
+}
+
+.match-card.badge-only.review-wrong .team-row.winner {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.match-card.badge-only.show-names {
+  width: 72px;
+}
+
+.match-card.badge-only.show-names .team-row {
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 2px;
+  gap: 2px;
+}
+
+.match-card.badge-only.show-names .team-name {
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-card.single-result.badge-only .team-row {
+  justify-content: center;
+  padding: 4px;
+}
+
+.result-card-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.result-label {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.result-card-shell.tone-gold .result-label {
+  color: var(--gold-primary);
+}
+
+.result-card-shell.tone-bronze .result-label {
+  color: #c9a227;
 }
 
 .team-row {

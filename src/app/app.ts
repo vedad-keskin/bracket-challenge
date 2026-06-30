@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { BracketPageComponent } from './features/bracket/bracket-page';
+import { RouterOutlet } from '@angular/router';
+import { NavComponent } from './shared/components/nav/nav';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [BracketPageComponent],
+  imports: [RouterOutlet, NavComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

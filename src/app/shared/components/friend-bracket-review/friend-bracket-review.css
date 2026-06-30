@@ -1,0 +1,91 @@
+:host {
+  display: block;
+}
+
+.review-bracket {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.review-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.legend-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.legend-correct {
+  background: #22c55e;
+  color: #fff;
+}
+
+.legend-wrong {
+  background: #ef4444;
+  color: #fff;
+}
+
+.legend-pending {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.review-bracket-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.review-bracket-grid {
+  display: flex;
+  gap: 4px;
+  align-items: stretch;
+  width: 100%;
+  justify-content: center;
+}
+
+.bracket-half {
+  display: flex;
+  gap: 4px;
+  align-items: stretch;
+}
+
+.bracket-left {
+  flex-direction: row;
+}
+
+.bracket-right {
+  flex-direction: row;
+}
+
+.bracket-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 56px;
+  flex-shrink: 0;
+}
+
+.bracket-round {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.round-matches {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: space-around;
+  flex: 1;
+}

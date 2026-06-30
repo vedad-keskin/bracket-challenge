@@ -6,6 +6,7 @@ import {
   getAdvancementPoints,
   getAdvancementRound,
 } from '../../../core/models/bracket.model';
+import { MatchVerdict } from '../../../core/models/challenge.model';
 
 @Component({
   selector: 'app-match-card',
@@ -17,9 +18,19 @@ import {
 export class MatchCardComponent {
   readonly match = input.required<Match>();
   readonly compact = input<boolean>(false);
+  readonly locked = input<boolean>(false);
+  readonly readonly = input<boolean>(false);
+  readonly reviewStatus = input<MatchVerdict | null>(null);
+  readonly badgeOnly = input<boolean>(false);
+  readonly showNames = input<boolean>(false);
+  readonly resultTeam = input<Team | null>(null);
+  readonly resultLabel = input<string | null>(null);
+  readonly resultLabelTone = input<'gold' | 'bronze'>('gold');
+  readonly neutral = input<boolean>(false);
   readonly winnerSelected = output<{ matchId: string; team: Team }>();
 
   onSelectTeam(team: Team | null): void {
+    if (this.readonly() || this.locked()) return;
     if (!team) return;
     const m = this.match();
     if (!m.team1 || !m.team2) return;

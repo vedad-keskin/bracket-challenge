@@ -1,0 +1,202 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.leaderboard-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+.page-header h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.ranking-section {
+  margin-top: 24px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ranking-table th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ranking-table tbody tr {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ranking-table tbody tr:hover {
+  background: var(--surface-card-hover);
+}
+
+.ranking-table tbody tr.leader {
+  background: rgba(212, 168, 67, 0.08);
+}
+
+.ranking-table tbody tr.selected {
+  outline: 2px solid var(--gold-primary);
+  outline-offset: -2px;
+}
+
+.friend-name {
+  font-weight: 700;
+}
+
+.points {
+  font-weight: 800;
+  color: var(--gold-light);
+  font-size: 18px;
+}
+
+.inspector-section {
+  margin-top: 28px;
+}
+
+.inspector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.inspector-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.inspector-score {
+  font-weight: 800;
+  color: var(--gold-light);
+}
+
+.friend-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.friend-tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.friend-tab.active {
+  border-color: var(--gold-primary);
+  color: var(--gold-light);
+  background: rgba(212, 168, 67, 0.1);
+}
+
+.inspector-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.view-tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.view-tab.active {
+  border-color: var(--gold-primary);
+  color: var(--gold-light);
+  background: rgba(212, 168, 67, 0.1);
+}
+
+.breakdown-table-wrap {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: auto;
+}
+
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.breakdown-table th,
+.breakdown-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.breakdown-table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.breakdown-table tr.correct td {
+  background: rgba(72, 187, 120, 0.08);
+}
+
+.breakdown-table tr.wrong td {
+  background: rgba(245, 101, 101, 0.08);
+}
+
+.breakdown-table tr.pending td {
+  color: var(--text-muted);
+}
+
+.round-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-right: 8px;
+  min-width: 80px;
+}

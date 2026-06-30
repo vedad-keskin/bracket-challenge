@@ -1,63 +1,139 @@
-<div class="match-card" [ngClass]="{ 'match-ready': isReady(), 'match-decided': match().winner, 'compact': compact() }">
-  <button
-    class="team-row"
-    [ngClass]="{ 'winner': isWinner(match().team1), 'loser': match().winner && !isWinner(match().team1) }"
-    [disabled]="!isReady()"
-    (click)="onSelectTeam(match().team1)"
-  >
-    @if (match().team1) {
-      <div class="team-badge-wrapper">
-        <img
-          [src]="match().team1!.badgePath"
-          [alt]="match().team1!.name"
-          class="team-badge"
-          loading="lazy"
-        />
-      </div>
-      @if (showTeamPoints(match().team1)) {
-        <span class="team-points" [attr.data-round]="pointsRound()">{{ advancementPoints() }}</span>
+@if (resultTeam()) {
+  <div class="result-card-shell" [ngClass]="{
+    'review-correct': reviewStatus() === 'correct',
+    'review-wrong': reviewStatus() === 'wrong',
+    'tone-gold': resultLabelTone() === 'gold',
+    'tone-bronze': resultLabelTone() === 'bronze'
+  }">
+    @if (resultLabel()) {
+      <span class="result-label">{{ resultLabel() }}</span>
+    }
+    <div class="match-card" [ngClass]="{
+      'match-readonly': readonly(),
+      'review-correct': reviewStatus() === 'correct',
+      'review-wrong': reviewStatus() === 'wrong',
+      'badge-only': badgeOnly(),
+      'show-names': badgeOnly() && showNames(),
+      'single-result': true
+    }">
+      @if (reviewStatus() === 'correct') {
+        <span class="review-flag review-flag-correct" title="Correct pick">✓</span>
       }
-      <span class="team-name">{{ match().team1!.name }}</span>
-    } @else {
-      <div class="team-badge-wrapper placeholder-badge">
-        <span class="placeholder-icon">?</span>
-      </div>
-      <span class="team-name placeholder-name">TBD</span>
-    }
-    @if (isWinner(match().team1)) {
-      <span class="winner-check">✓</span>
-    }
-  </button>
-
-  <div class="match-divider"></div>
-
-  <button
-    class="team-row"
-    [ngClass]="{ 'winner': isWinner(match().team2), 'loser': match().winner && !isWinner(match().team2) }"
-    [disabled]="!isReady()"
-    (click)="onSelectTeam(match().team2)"
-  >
-    @if (match().team2) {
-      <div class="team-badge-wrapper">
-        <img
-          [src]="match().team2!.badgePath"
-          [alt]="match().team2!.name"
-          class="team-badge"
-          loading="lazy"
-        />
-      </div>
-      @if (showTeamPoints(match().team2)) {
-        <span class="team-points" [attr.data-round]="pointsRound()">{{ advancementPoints() }}</span>
+      @if (reviewStatus() === 'wrong') {
+        <span class="review-flag review-flag-wrong" title="Wrong pick">✗</span>
       }
-      <span class="team-name">{{ match().team2!.name }}</span>
-    } @else {
-      <div class="team-badge-wrapper placeholder-badge">
-        <span class="placeholder-icon">?</span>
+      <div class="team-row" [title]="resultTeam()!.name">
+        <div class="team-badge-wrapper">
+          <img
+            [src]="resultTeam()!.badgePath"
+            [alt]="resultTeam()!.name"
+            class="team-badge"
+            loading="lazy"
+          />
+        </div>
+        @if (!badgeOnly() || showNames()) {
+          <span class="team-name">{{ resultTeam()!.name }}</span>
+        }
       </div>
-      <span class="team-name placeholder-name">TBD</span>
+    </div>
+  </div>
+} @else {
+  <div class="match-card" [ngClass]="{
+    'match-ready': isReady(),
+    'match-decided': match().winner && !neutral(),
+    'match-locked': locked(),
+    'match-readonly': readonly(),
+    'review-correct': reviewStatus() === 'correct',
+    'review-wrong': reviewStatus() === 'wrong',
+    'compact': compact() && !badgeOnly(),
+    'badge-only': badgeOnly(),
+    'show-names': badgeOnly() && showNames()
+  }">
+    @if (locked() && match().winner && !reviewStatus()) {
+      <span class="match-lock" title="Official result locked">🔒</span>
     }
-    @if (isWinner(match().team2)) {
-      <span class="winner-check">✓</span>
+    @if (reviewStatus() === 'correct') {
+      <span class="review-flag review-flag-correct" title="Correct pick">✓</span>
     }
-  </button>
-</div>
+    @if (reviewStatus() === 'wrong') {
+      <span class="review-flag review-flag-wrong" title="Wrong pick">✗</span>
+    }
+    <button
+      class="team-row"
+      [ngClass]="{
+        'winner': !neutral() && isWinner(match().team1),
+        'loser': !neutral() && match().winner && !isWinner(match().team1)
+      }"
+      [disabled]="!isReady() || readonly() || locked()"
+      [title]="badgeOnly() && match().team1 ? match().team1!.name : ''"
+      (click)="onSelectTeam(match().team1)"
+    >
+      @if (match().team1) {
+        <div class="team-badge-wrapper">
+          <img
+            [src]="match().team1!.badgePath"
+            [alt]="match().team1!.name"
+            class="team-badge"
+            loading="lazy"
+          />
+        </div>
+        @if (!badgeOnly() && showTeamPoints(match().team1)) {
+          <span class="team-points" [attr.data-round]="pointsRound()">{{ advancementPoints() }}</span>
+        }
+        @if (!badgeOnly() || showNames()) {
+          <span class="team-name">{{ match().team1!.name }}</span>
+        }
+      } @else {
+        <div class="team-badge-wrapper placeholder-badge">
+          <span class="placeholder-icon">?</span>
+        </div>
+        @if (!badgeOnly() || showNames()) {
+          <span class="team-name placeholder-name">TBD</span>
+        }
+      }
+      @if (!badgeOnly() && isWinner(match().team1)) {
+        <span class="winner-check">✓</span>
+      }
+    </button>
+
+    <div class="match-divider"></div>
+
+    <button
+      class="team-row"
+      [ngClass]="{
+        'winner': !neutral() && isWinner(match().team2),
+        'loser': !neutral() && match().winner && !isWinner(match().team2)
+      }"
+      [disabled]="!isReady() || readonly() || locked()"
+      [title]="badgeOnly() && match().team2 ? match().team2!.name : ''"
+      (click)="onSelectTeam(match().team2)"
+    >
+      @if (match().team2) {
+        <div class="team-badge-wrapper">
+          <img
+            [src]="match().team2!.badgePath"
+            [alt]="match().team2!.name"
+            class="team-badge"
+            loading="lazy"
+          />
+        </div>
+        @if (!badgeOnly() && showTeamPoints(match().team2)) {
+          <span class="team-points" [attr.data-round]="pointsRound()">{{ advancementPoints() }}</span>
+        }
+        @if (!badgeOnly() || showNames()) {
+          <span class="team-name">{{ match().team2!.name }}</span>
+        }
+      } @else {
+        <div class="team-badge-wrapper placeholder-badge">
+          <span class="placeholder-icon">?</span>
+        </div>
+        @if (!badgeOnly() || showNames()) {
+          <span class="team-name placeholder-name">TBD</span>
+        }
+      }
+      @if (!badgeOnly() && isWinner(match().team2)) {
+        <span class="winner-check">✓</span>
+      }
+    </button>
+  </div>
+}
