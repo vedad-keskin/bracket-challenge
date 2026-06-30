@@ -17,12 +17,12 @@ export class NavComponent {
   readonly bracketService = inject(BracketService);
   readonly bridge = inject(BracketExportBridgeService);
 
-  readonly isBracketPage = signal(this.router.url.startsWith('/bracket'));
+  readonly isBracketPage = signal(isBracketRoute(this.router.url));
 
   constructor() {
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
-      .subscribe(() => this.isBracketPage.set(this.router.url.startsWith('/bracket')));
+      .subscribe(() => this.isBracketPage.set(isBracketRoute(this.router.url)));
   }
 
   onReset(): void {
@@ -32,4 +32,9 @@ export class NavComponent {
   onExport(): void {
     void this.bridge.export();
   }
+}
+
+function isBracketRoute(url: string): boolean {
+  const path = url.split('?')[0].split('#')[0];
+  return path === '/' || path === '';
 }
