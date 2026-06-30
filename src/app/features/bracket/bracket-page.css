@@ -17,6 +17,43 @@
   margin-right: auto;
 }
 
+/* ===== Desktop: legend left, bracket top-right ===== */
+@media (min-width: 1100px) {
+  .bracket-main {
+    padding: 8px 16px 12px;
+  }
+
+  .export-container:not(.is-exporting) {
+    display: grid;
+    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+    align-items: start;
+    column-gap: 20px;
+  }
+
+  .export-container:not(.is-exporting) .export-header {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .export-container:not(.is-exporting) .bracket-container {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .export-container:not(.is-exporting) .scoring-wrapper {
+    margin: 0;
+    max-width: none;
+    width: 100%;
+  }
+
+  .export-container:not(.is-exporting) .bracket-desktop {
+    padding: 40px 0 0;
+  }
+}
+
 /* ===== Export container ===== */
 .export-container.is-exporting {
   width: max-content;

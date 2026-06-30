@@ -2,10 +2,12 @@ import {
   Component,
   computed,
   inject,
+  input,
   signal,
 } from '@angular/core';
 import { BracketService } from '../../../core/services/bracket.service';
 import { Team, Match, Round } from '../../../core/models/bracket.model';
+import { FriendBracketReview, MatchVerdict } from '../../../core/models/challenge.model';
 
 export interface RadialNode {
   x: number;
@@ -65,6 +67,14 @@ const R32_PAIR_COUNT = 16;
 const R32_PAIR_STEP = 360 / R32_PAIR_COUNT;
 const R32_INTRA_PAIR_OFFSET = 5.5;
 
+const BASE_NODE_SIZES: Record<string, number> = {
+  [Round.R32]: 92,
+  [Round.R16]: 40,
+  [Round.QF]: 38,
+  [Round.SF]: 40,
+  [Round.FINAL]: 42,
+};
+
 @Component({
   selector: 'app-radial-bracket',
   standalone: true,
@@ -75,8 +85,19 @@ const R32_INTRA_PAIR_OFFSET = 5.5;
 export class RadialBracketComponent {
   readonly bracketService = inject(BracketService);
 
-  readonly SIZE = 900;
-  readonly CENTER = this.SIZE / 2;
+  readonly review = input<FriendBracketReview | null>(null);
+  readonly size = input(900);
+
+  readonly scale = computed(() => this.size() / 900);
+  readonly isReviewMode = computed(() => this.review() != null);
+
+  get SIZE(): number {
+    return this.size();
+  }
+
+  get CENTER(): number {
+    return this.size() / 2;
+  }
 
   readonly R: Record<string, number> = {
     [Round.R32]: 0.95,
@@ -86,28 +107,31 @@ export class RadialBracketComponent {
     [Round.FINAL]: 0.24,
   };
 
-  readonly NODE_SIZES: Record<string, number> = {
-    [Round.R32]: 92,
-    [Round.R16]: 40,
-    [Round.QF]: 38,
-    [Round.SF]: 40,
-    [Round.FINAL]: 42,
-  };
-
   readonly hoveredNode = signal<RadialNode | null>(null);
   readonly tooltipX = signal(0);
   readonly tooltipY = signal(0);
 
+  readonly leftR32 = computed(() => this.review()?.leftR32 ?? this.bracketService.leftR32());
+  readonly rightR32 = computed(() => this.review()?.rightR32 ?? this.bracketService.rightR32());
+  readonly leftR16 = computed(() => this.review()?.leftR16 ?? this.bracketService.leftR16());
+  readonly rightR16 = computed(() => this.review()?.rightR16 ?? this.bracketService.rightR16());
+  readonly leftQF = computed(() => this.review()?.leftQF ?? this.bracketService.leftQF());
+  readonly rightQF = computed(() => this.review()?.rightQF ?? this.bracketService.rightQF());
+  readonly leftSF = computed(() => this.review()?.leftSF ?? this.bracketService.leftSF());
+  readonly rightSF = computed(() => this.review()?.rightSF ?? this.bracketService.rightSF());
+  readonly finalMatches = computed(() => this.review()?.final ?? this.bracketService.final());
+  readonly thirdPlaceMatches = computed(() => this.review()?.thirdPlace ?? this.bracketService.thirdPlace());
+
   readonly r32Nodes = computed(() =>
-    this.buildR32Nodes(this.bracketService.leftR32(), this.bracketService.rightR32())
+    this.buildR32Nodes(this.leftR32(), this.rightR32())
   );
 
   readonly r16Nodes = computed(() =>
     this.buildDerivedNodes(
       Round.R16,
       this.r32Nodes(),
-      this.bracketService.leftR16(),
-      this.bracketService.rightR16()
+      this.leftR16(),
+      this.rightR16()
     )
   );
 
@@ -115,8 +139,8 @@ export class RadialBracketComponent {
     this.buildDerivedNodes(
       Round.QF,
       this.r16Nodes(),
-      this.bracketService.leftQF(),
-      this.bracketService.rightQF()
+      this.leftQF(),
+      this.rightQF()
     )
   );
 
@@ -124,17 +148,29 @@ export class RadialBracketComponent {
     this.buildDerivedNodes(
       Round.SF,
       this.qfNodes(),
-      this.bracketService.leftSF(),
-      this.bracketService.rightSF()
+      this.leftSF(),
+      this.rightSF()
     )
   );
 
   readonly finalNodes = computed(() => this.buildFinalNodes());
 
-  readonly thirdPlaceMatch = computed(() => this.bracketService.thirdPlace()[0] ?? null);
-  readonly thirdPlaceWinner = computed(() => this.bracketService.thirdPlaceWinner());
-  readonly champion = computed(() => this.bracketService.champion());
-  readonly runnerUp = computed(() => this.bracketService.runnerUp());
+  readonly thirdPlaceMatch = computed(() => this.thirdPlaceMatches()[0] ?? null);
+  readonly thirdPlaceWinner = computed(() =>
+    this.review()?.thirdPlaceWinner ?? this.bracketService.thirdPlaceWinner()
+  );
+  readonly champion = computed(() =>
+    this.review()?.champion ?? this.bracketService.champion()
+  );
+  readonly runnerUp = computed(() => {
+    const rev = this.review();
+    if (rev) {
+      const m = rev.final[0];
+      if (!m?.winner || !m.team1 || !m.team2) return null;
+      return m.winner.id === m.team1.id ? m.team2 : m.team1;
+    }
+    return this.bracketService.runnerUp();
+  });
 
   readonly r32Connectors = computed(() => this.buildRoundForks(this.r32Nodes(), this.r16Nodes()));
   readonly r16Connectors = computed(() => this.buildRoundForks(this.r16Nodes(), this.qfNodes()));
@@ -221,7 +257,7 @@ export class RadialBracketComponent {
   }
 
   private buildFinalNodes(): RadialNode[] {
-    const matches = this.bracketService.final();
+    const matches = this.finalMatches();
     if (!matches.length) return [];
     const m = matches[0];
     const r = this.R[Round.FINAL] * this.CENTER;
@@ -358,7 +394,7 @@ export class RadialBracketComponent {
 
   getCrestOffset(node: RadialNode): string {
     const rad = ((node.angleDeg - 90) * Math.PI) / 180;
-    const d = 10;
+    const d = 10 * this.scale();
     const x = Math.cos(rad) * d;
     const y = Math.sin(rad) * d;
     return `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
@@ -368,9 +404,26 @@ export class RadialBracketComponent {
     return `translate(-50%, -50%) ${this.getCrestOffset(node)}`;
   }
 
+  getJunctionRadius(): number {
+    return 2.5 * this.scale();
+  }
+
+  // ─── Review ───
+
+  nodeVerdict(node: RadialNode): MatchVerdict | null {
+    if (!this.isReviewMode()) return null;
+    return this.review()!.verdicts[node.match.id] ?? 'pending';
+  }
+
+  matchVerdict(matchId: string | undefined): MatchVerdict | null {
+    if (!matchId || !this.isReviewMode()) return null;
+    return this.review()!.verdicts[matchId] ?? 'pending';
+  }
+
   // ─── Interaction ───
 
   onNodeClick(node: RadialNode): void {
+    if (this.isReviewMode()) return;
     if (!node.team) return;
     if (this.bracketService.isLocked(node.match.id)) return;
     if (!node.match.team1 || !node.match.team2) return;
@@ -378,6 +431,7 @@ export class RadialBracketComponent {
   }
 
   onThirdPlaceClick(team: Team | null): void {
+    if (this.isReviewMode()) return;
     const m = this.thirdPlaceMatch();
     if (!team || !m) return;
     if (this.bracketService.isLocked(m.id)) return;
@@ -386,12 +440,14 @@ export class RadialBracketComponent {
   }
 
   isClickable(node: RadialNode): boolean {
+    if (this.isReviewMode()) return false;
     if (!node.team) return false;
     if (this.bracketService.isLocked(node.match.id)) return false;
     return node.match.team1 !== null && node.match.team2 !== null;
   }
 
   isThirdPlaceClickable(team: Team | null): boolean {
+    if (this.isReviewMode()) return false;
     const m = this.thirdPlaceMatch();
     if (!team || !m) return false;
     if (this.bracketService.isLocked(m.id)) return false;
@@ -415,7 +471,7 @@ export class RadialBracketComponent {
   }
 
   getNodeSize(round: Round | string): number {
-    return this.NODE_SIZES[round] ?? 26;
+    return (BASE_NODE_SIZES[round] ?? 26) * this.scale();
   }
 
   onNodeHover(node: RadialNode, event: MouseEvent): void {

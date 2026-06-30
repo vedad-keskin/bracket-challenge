@@ -1,4 +1,9 @@
-<div class="radial-container" [style.width.px]="SIZE" [style.height.px]="SIZE">
+<div class="radial-root" [style.--radial-scale]="scale()">
+<div
+  class="radial-container"
+  [style.width.px]="SIZE"
+  [style.height.px]="SIZE"
+>
 
   <div class="radial-texture"></div>
   <div class="radial-glow"></div>
@@ -9,7 +14,7 @@
       <path [attr.d]="p.d" class="connector-line" [class.winner-path]="p.winnerPath" fill="none" />
     }
     @for (j of allJunctions(); track j.x + '-' + j.y) {
-      <circle [attr.cx]="j.x" [attr.cy]="j.y" r="2.5" class="junction-dot" />
+      <circle [attr.cx]="j.x" [attr.cy]="j.y" [attr.r]="getJunctionRadius()" class="junction-dot" />
     }
   </svg>
 
@@ -51,40 +56,68 @@
       }
       <span class="third-place-label-inline">3rd</span>
       @if (thirdPlaceMatch(); as m) {
-        <div class="third-place-mini-match">
-          <button
-            type="button"
-            class="third-mini-node"
-            [class.has-team]="m.team1 !== null"
-            [class.winner]="isThirdPlaceWinner(m.team1)"
-            [class.loser]="isThirdPlaceLoser(m.team1)"
-            [class.clickable]="isThirdPlaceClickable(m.team1)"
-            [disabled]="!isThirdPlaceClickable(m.team1)"
-            (click)="onThirdPlaceClick(m.team1)"
-            (mouseenter)="m.team1 && onTeamHover(m.team1, $event)"
-            (mouseleave)="onNodeLeave()"
-          >
-            @if (m.team1) {
-              <img [src]="m.team1.flagPath" [alt]="m.team1.name" class="third-mini-flag" loading="lazy" />
-            }
-          </button>
-          <span class="third-mini-divider"></span>
-          <button
-            type="button"
-            class="third-mini-node"
-            [class.has-team]="m.team2 !== null"
-            [class.winner]="isThirdPlaceWinner(m.team2)"
-            [class.loser]="isThirdPlaceLoser(m.team2)"
-            [class.clickable]="isThirdPlaceClickable(m.team2)"
-            [disabled]="!isThirdPlaceClickable(m.team2)"
-            (click)="onThirdPlaceClick(m.team2)"
-            (mouseenter)="m.team2 && onTeamHover(m.team2, $event)"
-            (mouseleave)="onNodeLeave()"
-          >
-            @if (m.team2) {
-              <img [src]="m.team2.flagPath" [alt]="m.team2.name" class="third-mini-flag" loading="lazy" />
-            }
-          </button>
+        <div
+          class="third-place-mini-match"
+          [class.review-correct]="matchVerdict(m.id) === 'correct'"
+          [class.review-wrong]="matchVerdict(m.id) === 'wrong'"
+        >
+          @if (isReviewMode()) {
+            <div
+              class="third-mini-node"
+              [class.has-team]="m.team1 !== null"
+              [class.winner]="isThirdPlaceWinner(m.team1)"
+              [class.loser]="isThirdPlaceLoser(m.team1)"
+            >
+              @if (m.team1) {
+                <img [src]="m.team1.flagPath" [alt]="m.team1.name" class="third-mini-flag" loading="lazy" />
+              }
+            </div>
+            <span class="third-mini-divider"></span>
+            <div
+              class="third-mini-node"
+              [class.has-team]="m.team2 !== null"
+              [class.winner]="isThirdPlaceWinner(m.team2)"
+              [class.loser]="isThirdPlaceLoser(m.team2)"
+            >
+              @if (m.team2) {
+                <img [src]="m.team2.flagPath" [alt]="m.team2.name" class="third-mini-flag" loading="lazy" />
+              }
+            </div>
+          } @else {
+            <button
+              type="button"
+              class="third-mini-node"
+              [class.has-team]="m.team1 !== null"
+              [class.winner]="isThirdPlaceWinner(m.team1)"
+              [class.loser]="isThirdPlaceLoser(m.team1)"
+              [class.clickable]="isThirdPlaceClickable(m.team1)"
+              [disabled]="!isThirdPlaceClickable(m.team1)"
+              (click)="onThirdPlaceClick(m.team1)"
+              (mouseenter)="m.team1 && onTeamHover(m.team1, $event)"
+              (mouseleave)="onNodeLeave()"
+            >
+              @if (m.team1) {
+                <img [src]="m.team1.flagPath" [alt]="m.team1.name" class="third-mini-flag" loading="lazy" />
+              }
+            </button>
+            <span class="third-mini-divider"></span>
+            <button
+              type="button"
+              class="third-mini-node"
+              [class.has-team]="m.team2 !== null"
+              [class.winner]="isThirdPlaceWinner(m.team2)"
+              [class.loser]="isThirdPlaceLoser(m.team2)"
+              [class.clickable]="isThirdPlaceClickable(m.team2)"
+              [disabled]="!isThirdPlaceClickable(m.team2)"
+              (click)="onThirdPlaceClick(m.team2)"
+              (mouseenter)="m.team2 && onTeamHover(m.team2, $event)"
+              (mouseleave)="onNodeLeave()"
+            >
+              @if (m.team2) {
+                <img [src]="m.team2.flagPath" [alt]="m.team2.name" class="third-mini-flag" loading="lazy" />
+              }
+            </button>
+          }
         </div>
       }
       </div>
@@ -104,7 +137,9 @@
       [class.winner]="node.isWinner"
       [class.loser]="node.isLoser"
       [class.clickable]="isClickable(node)"
-      [class.locked]="bracketService.isLocked(node.match.id)"
+      [class.locked]="!isReviewMode() && bracketService.isLocked(node.match.id)"
+      [class.review-correct]="nodeVerdict(node) === 'correct'"
+      [class.review-wrong]="nodeVerdict(node) === 'wrong'"
       [style.left.px]="node.x"
       [style.top.px]="node.y"
       [style.width.px]="getNodeSize(node.round)"
@@ -145,3 +180,4 @@
     </div>
   }
 }
+</div>

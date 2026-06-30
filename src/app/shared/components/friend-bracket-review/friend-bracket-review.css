@@ -39,53 +39,8 @@
   border: 1px solid var(--border-subtle);
 }
 
-.review-bracket-scroll {
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.review-bracket-grid {
+.review-radial-wrap {
   display: flex;
-  gap: 4px;
-  align-items: stretch;
-  width: 100%;
   justify-content: center;
-}
-
-.bracket-half {
-  display: flex;
-  gap: 4px;
-  align-items: stretch;
-}
-
-.bracket-left {
-  flex-direction: row;
-}
-
-.bracket-right {
-  flex-direction: row;
-}
-
-.bracket-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  min-width: 56px;
-  flex-shrink: 0;
-}
-
-.bracket-round {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.round-matches {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  justify-content: space-around;
-  flex: 1;
+  overflow: visible;
 }
