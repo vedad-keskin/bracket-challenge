@@ -87,11 +87,11 @@ export class RadialBracketComponent {
   };
 
   readonly NODE_SIZES: Record<string, number> = {
-    [Round.R32]: 72,
-    [Round.R16]: 30,
-    [Round.QF]: 28,
-    [Round.SF]: 30,
-    [Round.FINAL]: 32,
+    [Round.R32]: 80,
+    [Round.R16]: 34,
+    [Round.QF]: 32,
+    [Round.SF]: 34,
+    [Round.FINAL]: 36,
   };
 
   readonly hoveredNode = signal<RadialNode | null>(null);
