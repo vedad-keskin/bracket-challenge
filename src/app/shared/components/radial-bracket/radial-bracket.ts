@@ -87,11 +87,11 @@ export class RadialBracketComponent {
   };
 
   readonly NODE_SIZES: Record<string, number> = {
-    [Round.R32]: 80,
-    [Round.R16]: 34,
-    [Round.QF]: 32,
-    [Round.SF]: 34,
-    [Round.FINAL]: 36,
+    [Round.R32]: 92,
+    [Round.R16]: 40,
+    [Round.QF]: 38,
+    [Round.SF]: 40,
+    [Round.FINAL]: 42,
   };
 
   readonly hoveredNode = signal<RadialNode | null>(null);
@@ -134,6 +134,7 @@ export class RadialBracketComponent {
   readonly thirdPlaceMatch = computed(() => this.bracketService.thirdPlace()[0] ?? null);
   readonly thirdPlaceWinner = computed(() => this.bracketService.thirdPlaceWinner());
   readonly champion = computed(() => this.bracketService.champion());
+  readonly runnerUp = computed(() => this.bracketService.runnerUp());
 
   readonly r32Connectors = computed(() => this.buildRoundForks(this.r32Nodes(), this.r16Nodes()));
   readonly r16Connectors = computed(() => this.buildRoundForks(this.r16Nodes(), this.qfNodes()));

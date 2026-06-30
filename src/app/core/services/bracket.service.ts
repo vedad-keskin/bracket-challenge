@@ -44,6 +44,14 @@ export class BracketService {
     return finalMatch?.winner ?? null;
   });
 
+  readonly runnerUp = computed(() => {
+    const finalMatch = this.matches().find(m => m.round === Round.FINAL);
+    if (!finalMatch?.winner || !finalMatch.team1 || !finalMatch.team2) return null;
+    return finalMatch.winner.id === finalMatch.team1.id
+      ? finalMatch.team2
+      : finalMatch.team1;
+  });
+
   readonly thirdPlaceWinner = computed(() => {
     const match = this.matches().find(m => m.round === Round.THIRD_PLACE);
     return match?.winner ?? null;

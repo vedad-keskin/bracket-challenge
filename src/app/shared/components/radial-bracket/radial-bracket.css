@@ -98,7 +98,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 10px;
   pointer-events: auto;
 }
@@ -111,8 +111,8 @@
 }
 
 .champion-winner-flag {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow:
@@ -130,6 +130,33 @@
   line-height: 1;
 }
 
+.runner-up-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.runner-up-flag {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 1px rgba(192, 192, 200, 0.45),
+    0 0 8px rgba(192, 192, 200, 0.25);
+}
+
+.runner-up-label-inline {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(192, 192, 200, 0.75);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1;
+}
+
 .third-place-center {
   display: flex;
   flex-direction: column;
@@ -139,8 +166,8 @@
 }
 
 .third-winner-flag {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 0 8px rgba(255, 255, 255, 0.25);
@@ -167,8 +194,8 @@
 }
 
 .third-mini-node {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -201,8 +228,8 @@
 }
 
 .third-mini-flag {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   object-fit: cover;
   pointer-events: none;
@@ -297,8 +324,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 88px;
-  height: 88px;
+  width: 104px;
+  height: 104px;
   object-fit: contain;
   opacity: 0.32;
   filter: grayscale(35%);
@@ -308,8 +335,8 @@
 
 .node-flag {
   position: relative;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   z-index: 1;
@@ -318,8 +345,8 @@
 }
 
 .node-flag.solo-flag {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
 }
 
 .r32-node {

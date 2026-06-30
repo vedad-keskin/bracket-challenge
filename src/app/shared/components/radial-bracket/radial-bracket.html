@@ -27,6 +27,18 @@
           <span class="champion-label-inline">1st</span>
         </div>
       }
+      @if (runnerUp(); as ru) {
+        <div class="runner-up-center">
+          <img
+            class="runner-up-flag"
+            [src]="ru.flagPath"
+            [alt]="ru.name"
+            [title]="ru.name"
+            loading="lazy"
+          />
+          <span class="runner-up-label-inline">2nd</span>
+        </div>
+      }
       <div class="third-place-center">
       @if (thirdPlaceWinner(); as winner) {
         <img
