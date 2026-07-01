@@ -39,6 +39,10 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R32-left-2': 5,    // Canada beat South Africa
     'R32-right-0': 16,  // Brazil beat Japan
     'R32-left-3': 7,  // Morocco beat Netherlands
+    'R32-left-1': 2, // France beat Sweden
+    'R32-right-1': 19, // Norway beat Cote d'Ivoire
+    'R32-right-2':20, // Mexico beat Ecuador
+
   },
   predictions: {
     Vedo: {
