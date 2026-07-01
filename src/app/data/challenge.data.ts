@@ -42,7 +42,7 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R32-left-1': 2, // France beat Sweden
     'R32-right-1': 19, // Norway beat Cote d'Ivoire
     'R32-right-2':20, // Mexico beat Ecuador
-
+    'R32-right-3': 22, // England beat DR Congo
   },
   predictions: {
     Vedo: {
