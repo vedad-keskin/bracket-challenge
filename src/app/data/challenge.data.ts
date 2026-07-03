@@ -45,7 +45,8 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R32-right-3': 22, // England beat DR Congo
     'R32-left-7': 14, // Belgium beat Senegal
     'R32-left-6': 12, // USA beat Bosnia
-
+    'R32-left-4': 8, // Portugal beat Croatia
+    'R32-left-5': 10, // Spain beat Austria
   },
   predictions: {
     Vedo: {
