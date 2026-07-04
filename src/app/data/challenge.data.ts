@@ -47,6 +47,10 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R32-left-6': 12, // USA beat Bosnia
     'R32-left-4': 8, // Portugal beat Croatia
     'R32-left-5': 10, // Spain beat Austria
+    'R32-right-4': 24, // Argentina beat Cape Verde
+    'R32-right-5': 27, // Egypt beat Australia
+    'R32-right-6': 28, // Switzerland beat Algeria
+    'R32-right-7': 30, // Colombia beat Ghana
   },
   predictions: {
     Vedo: {
