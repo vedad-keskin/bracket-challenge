@@ -63,6 +63,7 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R32-right-7': 30, // Colombia beat Ghana
 
     'R16-left-1': 7, // Morocco beat Canada
+    'R16-left-0': 2, // France beat Paraguay
 
   },
   predictions: {
