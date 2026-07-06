@@ -65,6 +65,7 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R16-left-1': 7, // Morocco beat Canada
     'R16-left-0': 2, // France beat Paraguay
     'R16-right-0': 19, // Norway beat Brazil
+    'R16-right-1': 22, // England beat Mexico
   },
   predictions: {
     Vedo: {
