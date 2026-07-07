@@ -36,6 +36,12 @@ import { ChallengeData } from '../core/models/challenge.model';
  * 'R16-right-2' → 24=Argentina  27=Egypt
  * 'R16-right-3' → 28=Switzerland 30=Colombia
  *
+ * ─── R8 / QF MATCH KEYS ──────────────────────────────────────
+ * 'QF-left-0'  →  2=France      7=Morocco
+ * 'QF-left-1'  → 10=Spain     14=Belgium
+ * 'QF-right-0' → 19=Norway    22=England
+ * 'QF-right-1' → 24=Argentina  28=Switzerland
+ *
  * Later rounds use the same pattern:
  * 'R16-left-0', 'R16-right-0', 'QF-left-0', 'SF-left-0', 'FINAL-left-0', 'THIRD_PLACE-left-0'
  *
@@ -62,12 +68,14 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R32-right-6': 28, // Switzerland beat Algeria
     'R32-right-7': 30, // Colombia beat Ghana
 
-    'R16-left-1': 7, // Morocco beat Canada
     'R16-left-0': 2, // France beat Paraguay
-    'R16-right-0': 19, // Norway beat Brazil
-    'R16-right-1': 22, // England beat Mexico
+    'R16-left-1': 7, // Morocco beat Canada
     'R16-left-2': 10, // Spain beat Portugal
     'R16-left-3': 14, // Belgium beat USA
+    'R16-right-0': 19, // Norway beat Brazil
+    'R16-right-1': 22, // England beat Mexico
+    'R16-right-2': 24, // Argentina beat Egypt
+    'R16-right-3': 28, // Switzerland beat Colombia
   },
   predictions: {
     Vedo: {
