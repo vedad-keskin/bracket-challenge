@@ -78,6 +78,7 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R16-right-3': 28, // Switzerland beat Colombia
 
     'QF-left-0': 2, // France beat Morocco
+    'QF-left-1': 10, // Spain beat Belgium
   },
   predictions: {
     Vedo: {
