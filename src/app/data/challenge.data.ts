@@ -76,6 +76,7 @@ export const CHALLENGE_DATA: ChallengeData = {
     'R16-right-1': 22, // England beat Mexico
     'R16-right-2': 24, // Argentina beat Egypt
     'R16-right-3': 28, // Switzerland beat Colombia
+    'QF-right-0': 22, // England beat Norway
 
     'QF-left-0': 2, // France beat Morocco
     'QF-left-1': 10, // Spain beat Belgium
