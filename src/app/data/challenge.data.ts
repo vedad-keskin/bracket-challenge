@@ -82,6 +82,8 @@ export const CHALLENGE_DATA: ChallengeData = {
     'QF-right-0': 22, // England beat Norway
     'QF-right-1': 24, // Argentina beat Switzerland
 
+    'SF-left-0': 10, // Spain beat France
+
 
   },
   predictions: {
