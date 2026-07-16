@@ -83,6 +83,7 @@ export const CHALLENGE_DATA: ChallengeData = {
     'QF-right-1': 24, // Argentina beat Switzerland
 
     'SF-left-0': 10, // Spain beat France
+    'SF-right-0': 24, // Spain beat France
 
 
   },
